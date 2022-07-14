@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import Player from '../components/player'
+import Player from '../components/Player'
 import styles from '../styles/Home.module.css'
 
 
