@@ -65,7 +65,7 @@ const Control = ({ play, setPlay, activeTrack, setActiveTrack, volume, setVolume
                 <h1 className="min-w-[30px] text-center bg-white-600 drop-shadow-xl shadow-black">{volume}</h1>
 
                 {[...Array(10).keys()].map(vol => (
-                    <button className="bg-yellow-50 min-w-[20px] aspect-square drop-shadow-xl shadow-black" style={{ opacity: `${((vol + 1) * 10-5) <= volume ? '1' : '.2'}` }} value={(vol + 1) * 10} onClick={handleVolumeChange}></button>
+                    <button key={vol} className="bg-yellow-50 min-w-[20px] aspect-square drop-shadow-xl shadow-black" style={{ opacity: `${((vol + 1) * 10-5) <= volume ? '1' : '.2'}` }} value={(vol + 1) * 10} onClick={handleVolumeChange}></button>
                 ))}
             </div>
         </div>
