@@ -3,6 +3,5 @@
 - React
 - Node/Express
 - Socket
-- Tailwind
 - CSS
 - Youtube API

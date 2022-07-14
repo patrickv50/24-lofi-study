@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+.display-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  /* overflow: hidden; */
+  z-index: 1;
+}
+.display-container img {
+  position: absolute;
+  z-index: 1;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.crt_lines {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  background: url("/media/lines.jpg");
+  mix-blend-mode: overlay;
+  background-size: 7px 7px;
+  opacity: 0.6;
+  animation: moveDownAnimation 150s linear infinite;
+}
+.vignette {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+  background: url("/media/vignette.png");
+  z-index: 100;
+  background-size: 100% 100%;
+}
+.darken{
+  background: rgba(0,0,0,.1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* mix-blend-mode:overlay; */
+  z-index: 100;
+
+}
+.ytplayer {
+  position: absolute;
+  z-index: 100;
+}
+@keyframes moveDownAnimation {
+  100% {
+    background-position-y: 50%;
+  }
+}
