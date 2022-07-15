@@ -8,7 +8,7 @@ import {FaPlay} from 'react-icons/fa'
 
 const Player = () => {
     const [userEngaged, setUserEngaged] = useState(false)
-    const [play, setPlay] = useState(true)
+    const [play, setPlay] = useState(false)
     const [volume, setVolume] = useState(60)
     const [activeTrack, setActiveTrack] = useState({
         name: '1. Lofi Hip Hop',
@@ -17,7 +17,10 @@ const Player = () => {
 
     useEffect(() => {
         if (!userEngaged) window.addEventListener("keypress", () => { setUserEngaged(true) })
-        return (() => { window.removeEventListener("keypress", () => { setUserEngaged(true) }) })
+        return (() => { window.removeEventListener("keypress", () => { 
+            setUserEngaged(true) }) 
+            setPlay(true)
+        })
     }, [userEngaged])
 
     if (!userEngaged) return (
@@ -49,9 +52,9 @@ const Player = () => {
             />
 
             <Misc />
-            <div style={{ position: 'absolute' }}>
+            <div style={{ position: 'absolute',maxWidth:'0px', pointerEvents:'none' }}>
                 {userEngaged && <ReactPlayer url={activeTrack.audio}
-                    style={{ opacity: '0', height: '0', position: 'absolute' }}
+                    style={{ opacity: '0', height: '0', position: 'absolute',maxWidth:'0px', pointerEvents:'none' }}
                     volume={volume / 100}
                     playing={play} />}
             </div>
