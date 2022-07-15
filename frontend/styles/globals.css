@@ -39,11 +39,11 @@ a {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 2000;
+  z-index: 10;
   background: url("/media/lines.jpg");
   mix-blend-mode: overlay;
-  background-size: 7px 7px;
-  opacity: 0.6;
+  background-size: 7px auto;
+  opacity: 0.4;
   animation: moveDownAnimation 150s linear infinite;
 }
 .vignette {
@@ -53,28 +53,53 @@ a {
   left: 0;
   right: 0;
   mix-blend-mode: overlay;
-  opacity: 0.5;
+  opacity: 0.6;
   background: url("/media/vignette.png");
-  z-index: 100;
+  z-index: 11;
   background-size: 100% 100%;
 }
 .darken{
-  background: rgba(0,0,0,.1);
+  background: rgba(0,0,0,.25);
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   /* mix-blend-mode:overlay; */
-  z-index: 100;
+  z-index: 2;
 
 }
 .ytplayer {
   position: absolute;
-  z-index: 100;
+  /* z-index: 100; */
 }
 @keyframes moveDownAnimation {
   100% {
     background-position-y: 50%;
   }
+}
+.test{
+  opacity:.8 !important;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(221, 220, 216, 0.7);
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(105, 105, 105, 0.9);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

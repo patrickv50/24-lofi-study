@@ -9,19 +9,25 @@ import Playlist from './player/Playlist'
 const Player = () => {
     const [userEngaged, setUserEngaged] = useState(false)
     const [play, setPlay] = useState(true)
-    const [volume, setVolume] = useState(100)
+    const [volume, setVolume] = useState(60)
     const [activeTrack, setActiveTrack] = useState({
-        name: '1. Chill hop',
-        audio: 'https://www.youtube.com/watch?v=5yx6BWlEVcY',
+        name: '1. Lofi Hip Hop',
+        audio: 'https://www.youtube.com/watch?v=jfKfPfyJRdk',
     })
+
+    useEffect(() => {
+        if (!userEngaged) window.addEventListener("keypress", () => { setUserEngaged(true) })
+        return (() => { window.removeEventListener("keypress", () => { setUserEngaged(true) }) })
+    }, [userEngaged])
 
     if (!userEngaged) return (
         <>
+            <button className=" absolute bottom-5 left-5 p-5 color-re z-10 bg-yellow-50" onClick={() => setUserEngaged(true)}>Press Any Key To Play</button>
             <Display
-                trackName=""
+                trackName='Lofi Hip Hop'
             />
-            <button className="absolute top-0 color-re z-10 bg-slate-200" onClick={() => setUserEngaged(true)}>Press Any Key To Play</button>
         </>
+
     )
     else return (
         <>
@@ -37,15 +43,16 @@ const Player = () => {
                 setVolume={setVolume}
             />
             <Playlist
+
                 setActiveTrack={setActiveTrack}
             />
 
             <Misc />
             <div style={{ position: 'absolute' }}>
-                {play && <ReactPlayer url={activeTrack.audio}
+                {userEngaged && <ReactPlayer url={activeTrack.audio}
                     style={{ opacity: '0', height: '0', position: 'absolute' }}
                     volume={volume / 100}
-                    playing={true} />}
+                    playing={play} />}
             </div>
 
         </>

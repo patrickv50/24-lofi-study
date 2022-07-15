@@ -20,11 +20,6 @@ export default function Home() {
           <Player />
       </main>
 
-
-
-
-
-
     </div>
   )
 }
