@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { GoTriangleDown } from 'react-icons/go'
+import useFadeIn from '../hooks/useFadeIn'
+
 const radioStations = [{
     name: 'Lofi Hip Hop',
     audio: 'https://www.youtube.com/watch?v=jfKfPfyJRdk',
@@ -22,12 +24,13 @@ const Playlist = ({ setActiveTrack }) => {
     const handleTrackChange = (station) => {
         setActiveTrack(station)
     }
+    const [visible] = useFadeIn()
 
     return (
         <>
             <div className="absolute top-0 h-full w-full z-10 p-1 rounded " onClick={(e) => setListOpen(false)} >
                 {/* OPEN/CLOSE BUTTON HERE ========= */}
-                <button className="flex flex-col items-center mt-5 p-0 ml-5 z-20 min-w-[40px] text-[1.7rem] font-semibold text-yellow-700 rounded aspect-square bg-yellow-200  relative" onClick={(e) => {
+                <button className="flex flex-col items-center mt-5 p-0 ml-5 z-20 min-w-[40px] text-[1.7rem] duration-1000 font-semibold text-yellow-700 rounded aspect-square bg-yellow-200 relative" style={{ opacity: `${visible ? '.95' : '0'}` }} onClick={(e) => {
                     e.stopPropagation()
                     setListOpen(state => !state)
                 }} >

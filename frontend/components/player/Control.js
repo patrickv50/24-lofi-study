@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { FaPlay, FaPause, FaForward, FaBackward } from 'react-icons/fa'
+import useFadeIn from '../hooks/useFadeIn'
 
 const radioStations = [{
     name: 'Lofi Hip Hop',
@@ -58,8 +59,11 @@ const Control = ({ play, setPlay, activeTrack, setActiveTrack, volume, setVolume
         }
     }, [targetVolume, volume])
 
+ 
+
+    const [visible] = useFadeIn()
     return (
-            <div className="absolute bottom-7 left-7 z-[50] opacity-90 font-semibold text-yellow-50 border">
+        <div className="absolute bottom-7 left-7 z-[50] transition duration-1000 font-semibold text-yellow-50 border pr-2 p-1" style={{opacity:`${visible?'.9':'0'}`}}>
             <button className=" p-1 min-w-[30px] text-center   text-[1.3rem]  mr-3" onClick={() => setPlay(!play)}>{play ? <FaPause /> : <FaPlay />}</button>
             <button className="p-1 text-[1.3rem] mr-3" onClick={() => handleTrackChange('prev')}><FaBackward /></button>
             <button className=" p-1  text-[1.3rem] mr-3" onClick={() => handleTrackChange('next')}><FaForward /></button>

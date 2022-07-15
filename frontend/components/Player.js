@@ -4,7 +4,7 @@ import Control from './player/Control'
 import Display from './player/Display'
 import Misc from './player/Misc'
 import Playlist from './player/Playlist'
-
+import {FaPlay} from 'react-icons/fa'
 
 const Player = () => {
     const [userEngaged, setUserEngaged] = useState(false)
@@ -22,9 +22,10 @@ const Player = () => {
 
     if (!userEngaged) return (
         <>
-            <button className=" absolute bottom-5 left-5 p-5 color-re z-10 bg-yellow-50" onClick={() => setUserEngaged(true)}>Press Any Key To Play</button>
+
+            <button className=" absolute bottom-7 left-7 p-5 color-re z-10 bg-yellow-50 leading-1" onClick={() => setUserEngaged(true)}>Press <FaPlay className='inline text-lg text-yellow-700 hover:text-yellow-400' /> Or Any Key To Play</button>
             <Display
-                trackName='Lofi Hip Hop'
+                trackName=''
             />
         </>
 
