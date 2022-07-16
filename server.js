@@ -3,12 +3,13 @@ const app = express()
 const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
+const cors = require('cors');
 const io = new Server(server, {
   cors: {
-    origin: "https://24-lofi-study.vercel.app/",
+    origin: "https://24-lofi-study.vercel.app",
   },
 })
-
+app.use(cors());
 io.on('connection', (socket) => {
   let total = io.engine.clientsCount;
   console.log('connect. New: ',total)
