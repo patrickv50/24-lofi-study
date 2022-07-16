@@ -47,8 +47,8 @@ const Misc = () => {
 
     useEffect(() => {
         try {
-            // socket.current = io("https://lofi-study.herokuapp.com/")
-            socket.current = io("localhost:5000")
+            socket.current = io("https://lofi-study.herokuapp.com/")
+            // socket.current = io("localhost:5000")
             socket.current.on("updateCount", (data) => {
                 setLiveCount(data)
             });
@@ -86,7 +86,7 @@ const Misc = () => {
                 {application === 'info' ? <FaTimes className="text-red-500" /> : <FaInfo />}
             </button>
             {/* == FULLSCREEN BUTTON ====================== */}
-            <button className="p-[3px]" onClick={() => {
+            <button className="p-[3px] hidden sm:inline" onClick={() => {
                 if (fullScreen) CloseFullScreen()
                 else handleFullScreen()
                 setFullScreen((x) => !x)
@@ -255,7 +255,7 @@ const Task = ({ task, toggleTask, deleteTask }) => {
 // =====================================================
 const Info = () => {
     return (
-        <div className=" text-yellow-800 bg-yellow-50 p-2 rounded-lg">
+        <div className=" text-yellow-800 bg-yellow-50 p-2 w-[160px] rounded-lg">
             <h1 className="text-lg font-semi">Study Cafe </h1>
             <p className="text-xs ">By Patrick V.</p>
             <p className="text-xs mb-2">In development</p>
@@ -276,8 +276,8 @@ const Live = ({ socket,liveCount }) => {
         <div className=" text-yellow-800 w-max bg-yellow-50 p-2 rounded-lg">
             <p className="text-sm md:text-lg">{`You and ${liveCount-1||0} other student/s are jammin'`}</p>
             <div className="flex gap-1 flex-wrap">
-                {arrayOfGifs.map((media) => (
-                    <button onClick={() => emitGif(media)}>
+                {arrayOfGifs.map((media,index) => (
+                    <button key={index} onClick={() => emitGif(media)}>
                         <img className="max-w-[40px] sm:max-w-[80px]" src={`/media/share/${media}`} />
                     </button>
                 ))}
