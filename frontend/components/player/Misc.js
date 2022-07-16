@@ -8,6 +8,8 @@ const Misc = () => {
     const [application, setApplication] = useState("")
     const [fullScreen, setFullScreen] = useState(false)
     const [liveCount, setLiveCount] = useState(0)
+    const [gifAnimating, setGifAnimating] = useState(true)
+    const [gifName, setGifName] = useState('pengudance.gif')
     const socket = useRef()
     const handleFullScreen = () => {
         var elem = document.documentElement
@@ -45,16 +47,23 @@ const Misc = () => {
 
     useEffect(() => {
         try {
-            socket.current = io("https://lofi-study.herokuapp.com/");
+            // socket.current = io("https://lofi-study.herokuapp.com/")
+            socket.current = io("localhost:5000")
             socket.current.on("updateCount", (data) => {
                 setLiveCount(data)
             });
+            socket.current.on('showSharedGif', (data) => {
+                console.log(data)
+                setGifAnimating(x => !x)
+                setGifName(data)
+            })
         } catch (e) {
             console.error('SOCKET ERROR')
         }
     }, [])
     return (
         <div className="absolute top-2 right-2 flex flex-col sm:flex-row items-start gap-3 text-[1.4rem] text-yellow-50 z-20">
+            {/* == LIVE LISTENER BUTTON =================== */}
             <button className="p-[3px]" onClick={() => handleAppChange("live")}>
                 {application === 'live' ?
                     <FaTimes className="text-red-500 mb-2" /> :
@@ -64,36 +73,44 @@ const Misc = () => {
                     </div>
                 }
             </button>
+            {/* == TIMER BUTTON ========================= */}
             <button className="p-[3px]" onClick={() => handleAppChange("timer")}>
                 {application === 'timer' ? <FaTimes className="text-red-500" /> : <FaRegClock />}
             </button>
+            {/* == TODO LIST BUTTON ====================== */}
             <button className="p-[3px]" onClick={() => handleAppChange("todolist")}>
                 {application === 'todolist' ? <FaTimes className="text-red-500" /> : <FaList />}
             </button>
+            {/* == INFO BUTTON ====================== */}
             <button className="p-[3px]" onClick={() => handleAppChange("info")}>
                 {application === 'info' ? <FaTimes className="text-red-500" /> : <FaInfo />}
             </button>
+            {/* == FULLSCREEN BUTTON ====================== */}
             <button className="p-[3px]" onClick={() => {
                 if (fullScreen) CloseFullScreen()
                 else handleFullScreen()
                 setFullScreen((x) => !x)
             }}><FaExpandAlt /></button>
-
+            {/* == APPLICATION WINDOW ==============================*/}
             <div className="p-3 absolute top-10 right-7 sm:right-0 " style={{ opacity: `${application ? '.9' : '0'}` }} >
-                <FocusedWindow application={application} />
+                <FocusedWindow application={application} socket={socket} liveCount={liveCount} />
+            </div>
+            {/* == VIEWPORT ========================================*/}
+            <div className="fixed pointer-events-none top-0 bottom-0 left-0 right-0">
+                <img className="absolute duration-[5000ms]" style={{ left: `${Math.floor(Math.random() * 80)}vw`, bottom: gifAnimating ? '0vh' : '50vh', opacity: gifAnimating ? '0' : '1' }} src={`/media/share/${gifName}`} />
             </div>
         </div>
     )
 }
-const FocusedWindow = ({ application }) => {
+const FocusedWindow = ({ application, socket,liveCount }) => {
     switch (application) {
         case "timer": return <Timer />
         case "todolist": return <List />
         case "info": return <Info />
+        case "live": return <Live socket={socket} liveCount={liveCount} />
         default: return <></>
     }
 }
-// =====================================================
 // TIMER ===============================================
 // =====================================================
 const Timer = () => {
@@ -151,7 +168,6 @@ const Timer = () => {
     )
 }
 
-// =====================================================
 // LIST ================================================
 // =====================================================
 const List = () => {
@@ -235,16 +251,38 @@ const Task = ({ task, toggleTask, deleteTask }) => {
         </li>
     )
 }
-
+// INFO ================================================
+// =====================================================
 const Info = () => {
     return (
-        <div className="w-max text-yellow-800 bg-yellow-50 p-2 rounded-lg">
+        <div className=" text-yellow-800 bg-yellow-50 p-2 rounded-lg">
             <h1 className="text-lg font-semi">Study Cafe </h1>
             <p className="text-xs ">By Patrick V.</p>
             <p className="text-xs mb-2">In development</p>
             <p className="text-sm">e - change background</p>
             {/* <p className="text-sm"> Desktop only</p> */}
             {/* <p className="text-sm">e - change background</p> */}
+        </div>
+    )
+}
+// LIVE ================================================
+// =====================================================
+const arrayOfGifs = ['pengudance.gif', 'ayayajam.gif', 'ihateyou.gif', 'jammies.gif', 'peepod.gif']
+const Live = ({ socket,liveCount }) => {
+    const emitGif = (media) => {
+        socket.current.emit('shareGif', { name: media })
+    }
+    return (
+        <div className=" text-yellow-800 w-max bg-yellow-50 p-2 rounded-lg">
+            <p className="text-sm md:text-lg">{`You and ${liveCount-1||0} other student/s are jammin'`}</p>
+            <div className="flex gap-1 flex-wrap">
+                {arrayOfGifs.map((media) => (
+                    <button onClick={() => emitGif(media)}>
+                        <img className="max-w-[40px] sm:max-w-[80px]" src={`/media/share/${media}`} />
+                    </button>
+                ))}
+            </div>
+            <p className="text-sm">{`Share gifs others can see (broken)`}</p>
         </div>
     )
 }
