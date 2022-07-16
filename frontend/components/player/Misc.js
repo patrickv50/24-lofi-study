@@ -45,7 +45,7 @@ const Misc = () => {
 
     useEffect(() => {
         try {
-            socket.current = io("http://127.0.0.1:5000");
+            socket.current = io("https://lofi-study.herokuapp.com/");
             socket.current.on("updateCount", (data) => {
                 setLiveCount(data)
             });

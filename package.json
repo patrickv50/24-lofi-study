@@ -1,0 +1,25 @@
+{
+  "name": "24_lofi-study",
+  "version": "1.0.0",
+  "description": "- React\r - Node/Express\r - Socket\r - CSS\r - Youtube API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickv50/24-lofi-study.git"
+  },
+  "author": "Patrick Valera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patrickv50/24-lofi-study/issues"
+  },
+  "homepage": "https://github.com/patrickv50/24-lofi-study#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "http": "^0.0.1-security",
+    "socket.io": "^4.5.1"
+  }
+}
