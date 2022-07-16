@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react"
-import { FaRegClock, FaList, FaInfo, FaExpandAlt, FaCheck, FaTrashAlt, FaTimes, FaCaretUp, FaCaretDown, FaPlus } from 'react-icons/fa'
+import { useEffect, useRef, useState } from "react"
+import { FaRegClock, FaList, FaInfo, FaExpandAlt, FaCheck, FaTrashAlt, FaTimes, FaCaretUp, FaCaretDown, FaPlus, FaHeadphonesAlt } from 'react-icons/fa'
 import { GoTriangleDown } from "react-icons/go"
 import useFadeIn from "../hooks/useFadeIn"
-const Misc = () => {
-    const [application, setApplication] = useState("timer")
-    const [fullScreen, setFullScreen] = useState(false)
+import { io } from "socket.io-client";
 
+const Misc = () => {
+    const [application, setApplication] = useState("")
+    const [fullScreen, setFullScreen] = useState(false)
+    const [liveCount, setLiveCount] = useState(0)
+    const socket = useRef()
     const handleFullScreen = () => {
         var elem = document.documentElement
         if (elem.requestFullscreen) {
@@ -40,9 +43,27 @@ const Misc = () => {
         console.log("APP CHANGED TO", application)
     }, [application])
 
-
+    useEffect(() => {
+        try {
+            socket.current = io("http://127.0.0.1:5000");
+            socket.current.on("updateCount", (data) => {
+                setLiveCount(data)
+            });
+        } catch (e) {
+            console.error('SOCKET ERROR')
+        }
+    }, [])
     return (
-        <div className="absolute top-5 right-5  flex gap-3 text-[1.4rem] text-yellow-50 z-20">
+        <div className="absolute top-2 right-2 flex flex-col sm:flex-row items-start gap-3 text-[1.4rem] text-yellow-50 z-20">
+            <button className="p-[3px]" onClick={() => handleAppChange("live")}>
+                {application === 'live' ?
+                    <FaTimes className="text-red-500 mb-2" /> :
+                    <div className="animate-pulse mb-2">
+                        <FaHeadphonesAlt className=' text-red-400' />
+                        <p className="font-semibold max-h-0 text-red-400 text-[1rem] transform translate-y-[-3px]   ">{liveCount}</p>
+                    </div>
+                }
+            </button>
             <button className="p-[3px]" onClick={() => handleAppChange("timer")}>
                 {application === 'timer' ? <FaTimes className="text-red-500" /> : <FaRegClock />}
             </button>
@@ -58,7 +79,7 @@ const Misc = () => {
                 setFullScreen((x) => !x)
             }}><FaExpandAlt /></button>
 
-            <div className="p-3 absolute top-10 right-0 " style={{ opacity: `${application ? '.9' : '0'}` }} >
+            <div className="p-3 absolute top-10 right-7 sm:right-0 " style={{ opacity: `${application ? '.9' : '0'}` }} >
                 <FocusedWindow application={application} />
             </div>
         </div>
@@ -77,6 +98,11 @@ const FocusedWindow = ({ application }) => {
 // =====================================================
 const Timer = () => {
     const [time, setTime] = useState(30)
+    const [timeLeft, setTimeLeft] = useState(0)
+    const [play, setPlay] = useState(false)
+    const [visible] = useFadeIn()
+    const interval = useRef()
+
     const handleChangeTime = (action) => {
         if (action === "up") setTime(time + 10)
         else setTime(state => {
@@ -84,23 +110,43 @@ const Timer = () => {
             else return state - 10
         })
     }
-    const [visible] = useFadeIn()
     const startTimer = () => {
-
+        setPlay(true)
+        setTimeLeft(time * 60)
     }
+    useEffect(() => {
+        if (timeLeft && play) {
+            interval.current = setTimeout(() => setTimeLeft(state => state - 1), 1000)
+        }
+        return (() => clearInterval(interval.current))
+    }, [timeLeft, play])
     return (
-        <div className="text-yellow-900 flex-wrap bg-yellow-50 p-2 min-w-[200px] aspect-square content-center items-center flex justify-center rounded-lg duration-300" style={{ opacity: `${visible ? '1' : '0'}` }}>
-            <h1 className="mb-2">Ready,set,focus!</h1>
-            <div className="flex p-0 items-center ">
-                <span className="border border-yellow-700 p-2 min-w-[50px] text-center">{time}</span>
-                <div className="relative min-h-[55px] min-w-[50px] ">
-                    <button className="text-[2rem] absolute top-0" onClick={() => handleChangeTime("up")}><FaCaretUp /></button>
-                    <button className="text-[2rem] absolute bottom-0" onClick={() => handleChangeTime("down")} ><FaCaretDown /></button>
-                </div>
-            </div>
-            <button onClick={startTimer} className='bg-yellow-500 p-1 rounded-md'>
-                Start
-            </button>
+        <div className="text-yellow-900 flex flex-col flex-wrap bg-yellow-50 p-2 min-w-[200px] aspect-square content-center items-center justify-center rounded-lg duration-300" style={{ opacity: `${visible ? '1' : '0'}` }}>
+            <h1 className="mb-2">Ready, set, focus!</h1>
+            {!timeLeft ?
+                <>
+                    <div className="flex p-0 items-center ">
+                        <span className="border border-yellow-700 p-2 min-w-[50px] text-center">{time}</span>
+                        <div className="relative min-h-[55px] min-w-[50px] ">
+                            <button className="text-[2rem] absolute top-0" onClick={() => handleChangeTime("up")}><FaCaretUp /></button>
+                            <button className="text-[2rem] absolute bottom-0" onClick={() => handleChangeTime("down")} ><FaCaretDown /></button>
+                        </div>
+                    </div>
+
+                    <button onClick={startTimer} className='bg-yellow-500 p-1 rounded-md'>
+                        Start
+                    </button>
+                </> :
+                <>
+                    <div className="flex">
+                        <span>{Math.floor(timeLeft / 60 / 60)}</span>:
+                        <span>{Math.floor(timeLeft / 60) % 60}</span>:
+                        <span>{timeLeft % 60 < 10 ? ('0' + String(timeLeft % 60)) : (timeLeft % 60)}</span>
+                    </div>
+                    <button onClick={() => setPlay(x => !x)}>{play ? 'Pause' : 'Resume'}</button>
+                    <button onClick={() => setTimeLeft(0)}>Stop</button>
+                </>
+            }
         </div>
     )
 }
@@ -156,7 +202,10 @@ const List = () => {
         <>
             <div className="relative z-20 bg-yellow-50 p-2 rounded-lg duration-300 " style={{ opacity: `${visible ? '1' : '0'}` }}>
                 <div className="flex text-[1.2rem] text-black mb-2 border-1 border-yellow-500 rounded-t-lg overflow-hidden" >
-                    <input className="p-1 rounded-tl-lg outline-0" value={task} onChange={(e) => setTask(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { addNewTask() } }} placeholder="Enter New Task" />
+                    <input className="p-1 rounded-tl-lg outline-0" value={task} onChange={(e) => {
+                        e.stopPropagation()
+                        setTask(e.target.value)
+                    }} onKeyDown={(e) => { if (e.key === "Enter") { addNewTask() } }} placeholder="Enter New Task" />
                     <button className="p-1 px-2 bg-yellow-800 text-yellow-100 " onClick={addNewTask}><FaPlus /></button>
                     {/* <button className="p-1 bg-yellow-800 text-yellow-100 " onClick={deleteAllTask}>Delete</button> */}
                 </div>
@@ -164,15 +213,14 @@ const List = () => {
                     {tasks.map((task, index) => (
                         <Task task={task} key={index} toggleTask={toggleTask} deleteTask={deleteTask} />
                     ))}
-
                 </ul>
+                <div className="max-h-[1.3rem] text-center">
+                    {tasks.length > 9 &&
+                        <GoTriangleDown className="mx-auto text-yellow-800 min-h-[10px] text-[1.8rem] duration-200" />
+                    }
+                </div>
+            </div>
 
-            </div>
-            <div className="max-h-[15px] text-center">
-                {tasks.length > 9 &&
-                    <GoTriangleDown className="mx-auto text-yellow-800 min-h-[10px] text-[1.8rem] duration-200" />
-                }
-            </div>
         </>
     )
 }

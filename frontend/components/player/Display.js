@@ -37,7 +37,7 @@ const Display = ({ trackName }) => {
             <div className='vignette' />
             <div className='darken' />
             {trackName &&
-                <div className="flex items-center top-5 left-5 absolute z-20 duration-1000" style={{opacity:`${visible?'.95':'0'}`}}>
+                <div className="flex items-center top-2 left-2 md:top-5 md:left-5 absolute z-20 duration-1000" style={{opacity:`${visible?'.95':'0'}`}}>
                     <button className="min-w-[40px] opacity-0 text-[1.7rem] font-semibold text-yellow-700 aspect-square bg-yellow-200 mr-3 rounded-lg">5.</button>
 
                     <h1 className="text-yellow-50 text-[2rem]">{trackName ? trackName : ''}</h1>
