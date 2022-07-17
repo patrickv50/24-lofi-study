@@ -62,16 +62,16 @@ const Control = ({ play, setPlay, activeTrack, setActiveTrack, volume, setVolume
     const [visible] = useFadeIn()
 
     return (
-        <div className="absolute bottom-3 left-3 md:bottom-7 md:left-7 z-[50] transition duration-1000 font-semibold text-yellow-50 border pr-2 p-1" style={{opacity:`${visible?'.9':'0'}`}}>
+        <div className="absolute bottom-3 left-3 md:bottom-7 md:left-7 z-[50] transition duration-1000 font-semibold text-yellow-50 border pr-2 p-1 backdrop-blur-sm rounded-md" style={{opacity:`${visible?'.9':'0'}`}}>
             <button className=" p-1 min-w-[30px] text-center   text-[1.3rem]  mr-3" onClick={() => setPlay(!play)}>{play ? <FaPause /> : <FaPlay />}</button>
             <button className="p-1 text-[1.3rem] mr-3" onClick={() => handleTrackChange('prev')}><FaBackward /></button>
             <button className=" p-1  text-[1.3rem] mr-3" onClick={() => handleTrackChange('next')}><FaForward /></button>
             <div className="hidden md:flex gap-1 mt-1 items-center">
                 <h1 className="min-w-[30px] text-center bg-white-600  shadow-black">{volume}</h1>
-
                 {[...Array(10).keys()].map(vol => (
                     <button key={vol} className="bg-yellow-50 min-w-[15px] aspect-square shadow-black" style={{ opacity: `${((vol + 1) * 10 - 5) <= volume ? '1' : '.2'}` }} value={(vol + 1) * 10} onClick={handleVolumeChange}></button>
                 ))}
+
             </div>
         </div>
     )

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { FaMusic } from "react-icons/fa"
 import { GoTriangleDown } from 'react-icons/go'
 import useFadeIn from '../hooks/useFadeIn'
 
@@ -33,11 +34,11 @@ const Playlist = ({ setActiveTrack }) => {
         <>
             <div className="absolute top-0 h-full w-[250px] md:w-[300px] z-10 p-1 rounded " onClick={(e) => setListOpen(false)} >
                 {/* OPEN/CLOSE BUTTON HERE ========= */}
-                <button className="flex flex-col items-center mt-2 ml-2 md:mt-5 md:ml-5 z-20 min-w-[40px] text-[1.7rem] duration-1000 font-semibold text-yellow-700 rounded aspect-square bg-yellow-200 relative" style={{ opacity: `${visible ? '.95' : '0'}` }} onClick={(e) => {
+                <button className="block text-center mt-2 ml-2 md:mt-5 md:ml-5 z-20 p-2 text-[1.7rem] duration-1000 font-semibold text-yellow-700 rounded aspect-square bg-yellow-200 relative" style={{ opacity: `${visible ? '.95' : '0'}` }} onClick={(e) => {
                     e.stopPropagation()
                     setListOpen(state => !state)
                 }} >
-                    <span >1.</span>
+                    <span className="mx-auto" ><FaMusic /></span>
                     <GoTriangleDown className="flex-grow-0 absolute text-yellow-400 top-[80%] h-[50px] duration-200" style={{ transform: `rotate(${listOpen ? "180deg" : "0deg"})` }} />
                 </button>
                 {/* END OF BUTTON ============ */}
@@ -47,6 +48,12 @@ const Playlist = ({ setActiveTrack }) => {
                         {radioStations.map((station, index) => (
                             <Card key={index} index={index} station={station} handleTrackChange={handleTrackChange} />
                         ))}
+                        <li className="py-1 ">
+                            <button className="duration-75 font-bold" onClick={(e) => { }}>
+                                <span className="bg-yellow-400  text-yellow-900 p-1 mr-1 text-lg font-semibold inline-block min-w-[40px]">0{7}</span>
+                                <span>+Add</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
                 {/* END OF SONG LIST ============ */}

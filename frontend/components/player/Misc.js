@@ -62,7 +62,7 @@ const Misc = () => {
         }
     }, [])
     return (
-        <div className="absolute top-2 right-2 flex flex-col sm:flex-row items-start gap-3 text-[1.4rem] text-yellow-50 z-20">
+        <div className="absolute top-2 right-2 flex flex-col sm:flex-row items-start gap-3 text-[1.4rem] text-yellow-50 z-20 ">
             {/* == LIVE LISTENER BUTTON =================== */}
             <button className="p-[3px]" onClick={() => handleAppChange("live")}>
                 {application === 'live' ?
@@ -138,22 +138,23 @@ const Timer = () => {
         return (() => clearInterval(interval.current))
     }, [timeLeft, play])
     return (
-        <div className="text-yellow-900 flex flex-col flex-wrap bg-yellow-50 p-2 min-w-[200px] aspect-square content-center items-center justify-center rounded-lg duration-300" style={{ opacity: `${visible ? '1' : '0'}` }}>
-            <h1 className="mb-2">Ready, set, focus!</h1>
+        <div className="text-yellow-900 flex flex-col flex-wrap bg-yellow-50 min-w-[200px] aspect-square content-center items-center justify-center rounded-lg duration-300" style={{ opacity: `${visible ? '1' : '0'}` }}>
+            <h1 className="mb-2">Ready, Set, Focus!</h1>
             {!timeLeft ?
+                // TIMER SETTER HERE ==================
                 <>
-                    <div className="flex p-0 items-center ">
+                    <div className="flex p-0 items-center mb-1">
                         <span className="border border-yellow-700 p-2 min-w-[50px] text-center">{time}</span>
                         <div className="relative min-h-[55px] min-w-[50px] ">
                             <button className="text-[2rem] absolute top-0" onClick={() => handleChangeTime("up")}><FaCaretUp /></button>
                             <button className="text-[2rem] absolute bottom-0" onClick={() => handleChangeTime("down")} ><FaCaretDown /></button>
                         </div>
                     </div>
-
                     <button onClick={startTimer} className='bg-yellow-500 p-1 rounded-md'>
                         Start
                     </button>
                 </> :
+                // COUNTDOWN TIMER HERE ==================
                 <>
                     <div className="flex">
                         <span>{Math.floor(timeLeft / 60 / 60)}</span>:
@@ -274,7 +275,7 @@ const Live = ({ socket,liveCount }) => {
     }
     return (
         <div className=" text-yellow-800 w-max bg-yellow-50 p-2 rounded-lg">
-            <p className="text-sm md:text-lg">{`You and ${liveCount-1||0} other student/s are jammin'`}</p>
+            <p className="text-sm md:text-lg">{`You and ${liveCount-1||0} other/s are jammin'`}</p>
             <div className="flex gap-1 flex-wrap">
                 {arrayOfGifs.map((media,index) => (
                     <button key={index} onClick={() => emitGif(media)}>
