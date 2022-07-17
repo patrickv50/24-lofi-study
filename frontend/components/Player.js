@@ -20,15 +20,15 @@ const Player = () => {
     const timeOut = useRef()
     const staticPlayer = useRef()
 
-    useEffect(() => {
-        setStaticPlay(true)
-        timeOut.current = setTimeout(() => {
-            setStaticPlay(false)
-        }, 650)
-        return (() => {
-            clearTimeout(timeOut.current)
-        })
-    }, [activeTrack])
+    // useEffect(() => {
+    //     setStaticPlay(true)
+    //     timeOut.current = setTimeout(() => {
+    //         setStaticPlay(false)
+    //     }, 650)
+    //     return (() => {
+    //         clearTimeout(timeOut.current)
+    //     })
+    // }, [activeTrack])
 
 
     // useEffect(() => {
@@ -37,18 +37,16 @@ const Player = () => {
     //         window.removeEventListener("keypress", () => { setUserEngaged(true) })
     //     })
     // }, [userEngaged])
-    useEffect(()=>{
-        setPlay(false)
-    })
+   
     useEffect(() => {
         setLoaded(true)
     }, [])
     return (
         <>
 
-            <Display
+            {/* <Display
                 trackName={activeTrack.name || ""}
-            />
+            /> */}
             {/* <button className="rounded-md absolute z-[100] bottom-1 md:bottom-7 left-1 md:left-7 p-5  bg-yellow-50  flex flex-col items-center" onClick={() => {
                 setUserEngaged(true)
                 console.log('hero')
@@ -57,34 +55,35 @@ const Player = () => {
                 <p>Press <FaPlay className='mx-1 inline text-lg text-yellow-700 hover:text-yellow-400' />or any key to start</p>
                 <p className='sm:hidden text-xs'>{`(Best on desktop)`}</p>
             </button> */}
-            <Control
+            {/* <Control
                 play={play}
                 setPlay={setPlay}
                 activeTrack={activeTrack}
                 setActiveTrack={setActiveTrack}
                 volume={volume}
                 setVolume={setVolume}
-            />
-            <Playlist
+            /> */}
+            {/* <Playlist
                 setActiveTrack={setActiveTrack}
-            />
-            <Misc />
+            /> */}
+            {/* <Misc /> */}
 
             {/* AUDIO SRC HERE ============================================================== */}
-            <div style={{ position: 'absolute', maxWidth: '0px', pointerEvents: 'none' }}>
+            <div style={{ position: 'absolute', maxWidth: '0px', pointerEvents: 'none', top:'0' }}>
                 {loaded && <ReactPlayer url={activeTrack.audio}
                     style={{ opacity: '0', height: '0', position: 'absolute', maxWidth: '0px', pointerEvents: 'none' }}
                     volume={volume / 100}
                     playing={play} />}
             </div>
-            <ReactHowler
+            <button className='absolute bottom-0 -z-50' onClick={()=>setPlay(x=>!x)}>{play?'pause':'play'}</button>
+            {/* <ReactHowler
                 ref={staticPlayer}
                 src='/media/static.mp3'
                 playing={staticPlay}
                 volume={.4}
                 loop={true}
                 onPause={() => staticPlayer.current.seek(1)}
-            />
+            /> */}
         </>
     )
 }
