@@ -31,12 +31,12 @@ const Player = () => {
     }, [activeTrack])
 
 
-    useEffect(() => {
-        if (!userEngaged) window.addEventListener("keypress", () => { setUserEngaged(true) })
-        return (() => {
-            window.removeEventListener("keypress", () => { setUserEngaged(true) })
-        })
-    }, [userEngaged])
+    // useEffect(() => {
+    //     if (!userEngaged) window.addEventListener("keypress", () => { setUserEngaged(true) })
+    //     return (() => {
+    //         window.removeEventListener("keypress", () => { setUserEngaged(true) })
+    //     })
+    // }, [userEngaged])
     useEffect(() => {
         setLoaded(true)
     }, [])
@@ -44,24 +44,24 @@ const Player = () => {
         <>
 
             <Display
-                trackName={userEngaged ? activeTrack.name : ""}
+                trackName={activeTrack.name || ""}
             />
-            <button className="rounded-md absolute z-[100] bottom-1 md:bottom-7 left-1 md:left-7 p-5  bg-yellow-50  flex flex-col items-center" onClick={() => {
+            {/* <button className="rounded-md absolute z-[100] bottom-1 md:bottom-7 left-1 md:left-7 p-5  bg-yellow-50  flex flex-col items-center" onClick={() => {
                 setUserEngaged(true)
                 console.log('hero')
                 setPlay(true)
             }}>
                 <p>Press <FaPlay className='mx-1 inline text-lg text-yellow-700 hover:text-yellow-400' />or any key to start</p>
                 <p className='sm:hidden text-xs'>{`(Best on desktop)`}</p>
-            </button>
-            {/* <Control
+            </button> */}
+            <Control
                 play={play}
                 setPlay={setPlay}
                 activeTrack={activeTrack}
                 setActiveTrack={setActiveTrack}
                 volume={volume}
                 setVolume={setVolume}
-            /> */}
+            />
             <Playlist
                 setActiveTrack={setActiveTrack}
             />
