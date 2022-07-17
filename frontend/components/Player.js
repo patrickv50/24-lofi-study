@@ -60,8 +60,9 @@ const Player = () => {
                 <button className="rounded-md absolute bottom-1 md:bottom-7 left-1 md:left-7 p-5 color-re z-10 bg-yellow-50  flex flex-col items-center" onClick={() => {
                     setUserEngaged(true)
                 }}>
-                    <p>Press <FaPlay className='mx-1 inline text-lg text-yellow-700 hover:text-yellow-400' />or any key to start</p>
-                    <p className='sm:hidden'>(This site is optimized for desktop.)</p>
+                    <p className='hidden sm:flex items-center '>Press <FaPlay className='mx-1 text-lg text-yellow-700 hover:text-yellow-400' />or any key to start</p>
+                    <p className='text-[10px] flex sm:hidden'>{`This doesn't fully work on mobile :(`}<br/><FaPlay className='text-sm text-yellow-700 hover:text-yellow-400' />to continue.</p>
+                    {/* <p className='sm:hidden'>(This site is optimized for desktop.)</p> */}
                 </button>
             }
             {/* AUDIO SRC HERE ============================================================== */}
