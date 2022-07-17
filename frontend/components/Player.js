@@ -13,7 +13,6 @@ const Player = () => {
     const [userEngaged, setUserEngaged] = useState(false)
     const [play, setPlay] = useState(false)
     const [staticPlay, setStaticPlay] = useState(false)
-    const [loaded, setLoaded] = useState(true)
     const [volume, setVolume] = useState(60)
     const [activeTrack, setActiveTrack] = useState({
         name: 'Lofi Hip Hop',
@@ -21,8 +20,9 @@ const Player = () => {
     })
     const timeOut = useRef()
     const staticPlayer = useRef()
-
+    console.log(play)
     useEffect(() => {
+        setPlay(true)
         setStaticPlay(true)
         timeOut.current = setTimeout(() => {
             setStaticPlay(false)
@@ -32,15 +32,11 @@ const Player = () => {
         })
     }, [activeTrack])
     useEffect(() => {
-        setLoaded(true)
-    }, [])
-    useEffect(() => {
         if (!userEngaged) window.addEventListener("keypress", () => { setUserEngaged(true) })
         return (() => {
             window.removeEventListener("keypress", () => { setUserEngaged(true) })
         })
     }, [userEngaged])
-
     return (
         <>
             <Display
@@ -76,15 +72,13 @@ const Player = () => {
                 ref={staticPlayer}
                 src='/media/static.mp3'
                 playing={staticPlay}
-                volume={.4}
+                volume={.9}
                 loop={true}
                 onPause={() => staticPlayer.current.seek(1)}
             />
         </>
     )
 }
-
-
 
 export default Player
 
