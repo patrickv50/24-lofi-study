@@ -22,13 +22,9 @@ const Player = () => {
 
     useEffect(() => {
         setStaticPlay(true)
-        setPlay(false)
         timeOut.current = setTimeout(() => {
             setStaticPlay(false)
         }, 650)
-        setTimeout(()=>{
-            setPlay(true)
-        },50)
         return (() => {
             clearTimeout(timeOut.current)
         })
@@ -37,6 +33,9 @@ const Player = () => {
     useEffect(() => {
         setLoaded(true)
     }, [])
+    useEffect(()=>{
+        setPlay(true)
+    },[loaded])
     useEffect(() => {
         if (!userEngaged) window.addEventListener("keypress", () => { setUserEngaged(true) })
         return (() => {
