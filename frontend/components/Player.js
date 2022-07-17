@@ -14,7 +14,7 @@ const Player = () => {
     const [loaded, setLoaded] = useState(false)
     const [volume, setVolume] = useState(60)
     const [activeTrack, setActiveTrack] = useState({
-        name: '1. Lofi Hip Hop',
+        name: 'Lofi Hip Hop',
         audio: 'https://www.youtube.com/watch?v=jfKfPfyJRdk',
     })
     const timeOut = useRef()
@@ -65,7 +65,7 @@ const Player = () => {
                     setPlay(true)
                 }}>
                     <p>Press <FaPlay className='mx-1 inline text-lg text-yellow-700 hover:text-yellow-400' />or any key to start</p>
-                    <p className='sm:hidden text-xs'>{`(Best on Desktop)`}</p>
+                    <p className='sm:hidden text-xs'>{`(Best on desktop)`}</p>
                 </button>
             }
             {/* AUDIO SRC HERE ============================================================== */}

@@ -62,7 +62,7 @@ const Misc = () => {
         }
     }, [])
     return (
-        <div className="absolute top-2 right-2 flex flex-col sm:flex-row items-start gap-3 text-[1.4rem] text-yellow-50 z-20 ">
+        <div className="absolute top-2 right-2 md:top-5 md:right-5 flex flex-col sm:flex-row items-start gap-3 text-[1.4rem] text-yellow-50 z-20 ">
             {/* == LIVE LISTENER BUTTON =================== */}
             <button className="p-[3px]" onClick={() => handleAppChange("live")}>
                 {application === 'live' ?
@@ -257,7 +257,7 @@ const Task = ({ task, toggleTask, deleteTask }) => {
 const Info = () => {
     return (
         <div className=" text-yellow-800 bg-yellow-50 p-2 w-[160px] rounded-lg">
-            <h1 className="text-lg font-semi">Study Cafe </h1>
+            <h1 className="text-lg font-semi">BENTOOO </h1>
             <p className="text-xs ">By Patrick V.</p>
             <p className="text-xs mb-2">In development</p>
             <p className="text-sm">e - change background</p>

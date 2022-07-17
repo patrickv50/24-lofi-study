@@ -32,7 +32,7 @@ const Playlist = ({ setActiveTrack }) => {
 
     return (
         <>
-            <div className="absolute top-0 h-full w-[250px] md:w-[300px] z-10 p-1 rounded " onClick={(e) => setListOpen(false)} >
+            <div className="absolute top-0 h-full w-[250px] md:w-[300px] z-10 p-1 rounded opacity-90" onClick={(e) => setListOpen(false)} >
                 {/* OPEN/CLOSE BUTTON HERE ========= */}
                 <button className="block text-center mt-2 ml-2 md:mt-5 md:ml-5 z-20 p-2 text-[1.7rem] duration-1000 font-semibold text-yellow-700 rounded aspect-square bg-yellow-200 relative" style={{ opacity: `${visible ? '.95' : '0'}` }} onClick={(e) => {
                     e.stopPropagation()

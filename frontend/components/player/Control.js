@@ -3,7 +3,7 @@ import { FaPlay, FaPause, FaForward, FaBackward } from 'react-icons/fa'
 import useFadeIn from '../hooks/useFadeIn'
 
 const radioStations = [{
-    name: 'Lofi Hip Hop',
+    name: 'Lofi Bop',
     audio: 'https://www.youtube.com/watch?v=jfKfPfyJRdk',
 }, {
     name: 'Anime Lofi',
