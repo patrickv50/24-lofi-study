@@ -22,9 +22,13 @@ const Player = () => {
 
     useEffect(() => {
         setStaticPlay(true)
+        setPlay(false)
         timeOut.current = setTimeout(() => {
             setStaticPlay(false)
         }, 650)
+        setTimeout(()=>{
+            setPlay(true)
+        },50)
         return (() => {
             clearTimeout(timeOut.current)
         })
@@ -62,7 +66,7 @@ const Player = () => {
                 </> :
                 <button className="rounded-md absolute bottom-1 md:bottom-7 left-1 md:left-7 p-5 color-re z-10 bg-yellow-50  flex flex-col items-center" onClick={() => {
                     setUserEngaged(true)
-                    setPlay(true)
+                    // setPlay(true)
                 }}>
                     <p>Press <FaPlay className='mx-1 inline text-lg text-yellow-700 hover:text-yellow-400' />or any key to start</p>
                     <p className='sm:hidden text-xs'>{`(Best on desktop)`}</p>
