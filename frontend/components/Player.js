@@ -9,7 +9,7 @@ import ReactHowler from 'react-howler'
 
 const Player = () => {
     const [userEngaged, setUserEngaged] = useState(false)
-    const [play, setPlay] = useState(true)
+    const [play, setPlay] = useState(false)
     const [staticPlay, setStaticPlay] = useState(false)
     const [loaded, setLoaded] = useState(false)
     const [volume, setVolume] = useState(60)
