@@ -63,7 +63,7 @@ const Control = ({ play, setPlay, activeTrack, setActiveTrack, volume, setVolume
 
     return (
         <div className="absolute bottom-3 left-3 md:bottom-7 md:left-7 z-[50] transition duration-1000 font-semibold text-yellow-50 border pr-2 p-1 backdrop-blur-sm rounded-md" style={{opacity:`${visible?'.9':'0'}`}}>
-            <button className=" p-1 min-w-[30px] text-center   text-[1.3rem]  mr-3" onClick={() => setPlay(!play)}>{play ? <FaPause /> : <FaPlay />}</button>
+            <button className=" p-1 min-w-[30px] text-center   text-[1.3rem]  mr-3" onClick={() => setPlay((x)=>!x)}>{play ? <FaPause /> : <FaPlay />}</button>
             <button className="p-1 text-[1.3rem] mr-3" onClick={() => handleTrackChange('prev')}><FaBackward /></button>
             <button className=" p-1  text-[1.3rem] mr-3" onClick={() => handleTrackChange('next')}><FaForward /></button>
             <div className="hidden md:flex gap-1 mt-1 items-center">

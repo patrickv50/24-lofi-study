@@ -9,7 +9,7 @@ import ReactHowler from 'react-howler'
 
 const Player = () => {
     const [userEngaged, setUserEngaged] = useState(false)
-    const [play, setPlay] = useState(false)
+    const [play, setPlay] = useState(true)
     const [staticPlay, setStaticPlay] = useState(false)
     const [loaded, setLoaded] = useState(false)
     const [volume, setVolume] = useState(60)
@@ -37,6 +37,9 @@ const Player = () => {
     //         window.removeEventListener("keypress", () => { setUserEngaged(true) })
     //     })
     // }, [userEngaged])
+    useEffect(()=>{
+        setPlay(false)
+    })
     useEffect(() => {
         setLoaded(true)
     }, [])
